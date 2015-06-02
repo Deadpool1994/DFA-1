@@ -62,6 +62,42 @@ public class graph {
 	            System.out.println("\n");
 	        }
 	    }
+	 
+	 public void check(){
+		 
+		 
+		 System.out.println("The string is:");
+		 Scanner s = new Scanner (System.in);
+		 String check = s.nextLine();
+		 
+		 int StartState = indexForName(s.nextInt());
+		 
+		 int finalState = indexForName(s.nextInt());
+		 
+		 for(int i=0;i<check.length();i++){
+			 
+			 node cState = adjlist[StartState].list;
+			 
+			 while(cState.input != check.charAt(i)){
+				 
+				 cState = cState.next;
+				 
+			 }
+			 if (cState.input == check.charAt(i)){
+				 StartState = indexForName(cState.destinationNode);
+			 }
+			 
+		 }
+		 
+		 if (StartState == finalState){
+			 System.out.println("Yes!!!  Yes It is accepted");
+		 }
+		 else{
+			 System.out.println("mehnaat karo");
+		 }
+		 
+		 
+	 }
 	
 	
 }
