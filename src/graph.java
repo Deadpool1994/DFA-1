@@ -5,6 +5,7 @@ public class graph {
 
 	vertex[] adjlist;
 	char[] alphabet;
+	int length;
 	
 	public graph(){
 		
@@ -13,10 +14,11 @@ public class graph {
 		System.out.println("Enter number of States:");
 		int n= s.nextInt();
 		adjlist = new vertex[n];
+		length = n;
 		System.out.println("States:");
 		for(int i=0;i<n;i++)
 		{
-			adjlist[i] = new vertex(s.nextInt(),null);
+			adjlist[i] = new vertex(s.nextInt(),null,false);
 		}
 		
 		System.out.println("enter the number of alphabets");
@@ -24,7 +26,7 @@ public class graph {
 		System.out.println("Enter the alphabets");
 		alphabet = new char[n];
 		String ex1 = s.nextLine();
-		for(int i=0;i<n;i++){
+		for(int i=0;i<num;i++){
 			String cut = s.nextLine();
 			alphabet[i]=cut.charAt(0);
 		}
@@ -50,7 +52,7 @@ public class graph {
 	}
 	
 	int indexForName(int vadd) {
-        for (int v=0; v < adjlist.length; v++) {
+        for (int v=0; v < length; v++) {
             if (adjlist[v].vNumber == vadd) {
                 return v;
             }
@@ -69,7 +71,7 @@ public class graph {
 	        
 	        
 	        
-	        for (int v=0; v < adjlist.length; v++) {
+	        for (int v=0; v < length; v++) {
 	            System.out.print(adjlist[v].vNumber);
 	            for (node nbr=adjlist[v].list; nbr != null;nbr=nbr.next) {
 	                System.out.print(" --> " + nbr.input +nbr.destinationNode);
@@ -140,6 +142,40 @@ public class graph {
 		 }
 		 
 		 
+	 }
+	 
+	 public void delete(){
+		 
+		 //System.out.println("Enter the node to be delete");
+		 Scanner s = new Scanner(System.in);
+		 //int node = indexForName(s.nextInt());
+		 
+		 System.out.println("The start state is:");
+		 
+		 int StartState = indexForName(s.nextInt());
+
+		 
+		 for(int i=0;i<adjlist.length;i++){
+			 for(node nbr = adjlist[i].list;nbr!= null ; nbr = nbr.next){
+				 int x =indexForName(nbr.destinationNode) ;
+				 adjlist[x].flag = true;
+			 }
+		 }
+		 
+		 for(int i=0;i<adjlist.length;i++){
+			 if(adjlist[i].flag == false && i!= StartState){
+				 for(int j=i;j<adjlist.length-1;j++){
+					 adjlist[j]=adjlist[j+1];
+				 }
+				 length--;
+			 }
+		 }
+		 
+	/*	 System.out.println(adjlist.length);
+		 for(int i=node;i<adjlist.length-1;i++){
+			 adjlist[i]=adjlist[i+1];
+		 }
+		 length--;*/
 	 }
 	
 	

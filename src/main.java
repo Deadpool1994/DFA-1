@@ -13,8 +13,9 @@ public class main {
         //String file = sc.nextLine();
         graph g = new graph();
         g.print();
-		g.check();
-		
+		//g.check();
+		g.delete();
+		g.print();
 	}
 
 }
