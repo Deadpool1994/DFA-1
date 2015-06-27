@@ -63,6 +63,7 @@ public class graph {
     }   
 	
 	
+
 	 public void print() {
 	        System.out.println();
 	        
@@ -309,10 +310,44 @@ public class graph {
 		 
 		 for(int i=0;i<length;i++){
 			 for(int j=0;j<length;j++){
-				 System.out.print(table[i][j]);
+				 System.out.print(table[i][j]+"");
 			 }
 			 System.out.println();
 		 }
+		 int o=length;
+		 for(int i=0;i<o;i++){
+			 for(int j=0;j<o;j++){
+				 if(table[i][j]=='*'){
+					 
+					 //System.out.println("bug!!");
+					 
+					 for(int k=0;k<length;k++){
+						 
+						 //System.out.println("b"+k);
+						 
+						 node tmp= adjlist[k].list;
+						 while(tmp != null){
+							 if(indexForName(tmp.destinationNode) == i){
+								 tmp.destinationNode=adjlist[j].vNumber;
+							 }
+							 tmp = tmp.next;
+						 }
+						 
+					 }
+					 
+					 deleteVertex(i);					 
+				 }
+			 }
+		 }
 		 
 	 }
+
+	public void deleteVertex(int i) {
+		
+		for(int j=i;j<length-1;j++){
+			 adjlist[j]=adjlist[j+1];
+		 }
+		 length--;	
+		
+	}
 }
