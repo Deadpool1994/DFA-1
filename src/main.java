@@ -16,6 +16,7 @@ public class main {
 		//g.check();
 		g.delete();
 		g.print();
+		g.makeTable();
 	}
 
 }

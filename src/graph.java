@@ -6,13 +6,15 @@ public class graph {
 	vertex[] adjlist;
 	char[] alphabet;
 	int length;
+	int n,num;
+
 	
 	public graph(){
 		
 		Scanner s = new Scanner(System.in);
 		
 		System.out.println("Enter number of States:");
-		int n= s.nextInt();
+		n= s.nextInt();
 		adjlist = new vertex[n];
 		length = n;
 		System.out.println("States:");
@@ -22,9 +24,9 @@ public class graph {
 		}
 		
 		System.out.println("enter the number of alphabets");
-		int num = s.nextInt();
+		num = s.nextInt();
 		System.out.println("Enter the alphabets");
-		alphabet = new char[n];
+		alphabet = new char[num];
 		String ex1 = s.nextLine();
 		for(int i=0;i<num;i++){
 			String cut = s.nextLine();
@@ -177,6 +179,140 @@ public class graph {
 		 }
 		 length--;*/
 	 }
-	
-	
+	 
+	 public void makeTable(){
+		 
+		 char [][]table = new char [length][length];
+		 //System.out.println(n+"+++"+num);
+		 
+		 System.out.println("Number of final state");
+		 Scanner s = new Scanner(System.in);
+		 int len = s.nextInt();
+		 int []end = new int[len];
+		 String ex = s.nextLine();
+		 for(int i=0; i<len;i++){
+			 String d=s.nextLine();
+			 
+			 end[i] = indexForName(Character.getNumericValue(d.charAt(0)));
+			 System.out.println(end[i]);
+		 }
+		 
+		 for(int i=0;i<length;i++){
+			 for(int j=0;j<length;j++){
+				 table[i][j]='*';
+			 }
+			
+		 }
+		 
+	/*	 for(int i=0;i<len;i++){
+			 
+			 System.out.print(end[i]+ " ");
+		 }
+	*/	 
+		 for(int i=0;i<len;i++){
+			 for(int j=0;j<length;j++){
+				 table[end[i]][j]='X';
+				 table[j][end[i]]='X'; 				 
+			 }
+		 }
+		 
+
+		 for(int i=0;i<length;i++){
+			 for(int j=0;j<length;j++){
+				 
+				 if(i<=j){
+					 table[i][j]='Y';
+				 }
+				 
+			 }
+		 }
+		 int count=0;
+		 
+		 for(int j=0;j<length;j++){
+			 for(int i=0;i<length;i++){
+				 
+				 if(table[i][j]=='*'){
+					 count++;
+				 }
+				 System.out.print(table[j][i]+" ");				 
+			 }
+			 System.out.println();
+		 }
+		 int flag=0;
+		 int l=alphabet.length;
+		 
+		 while(flag!=count && count>-2){
+			 flag=count;
+			 System.out.println();
+			 System.out.println(count);
+			 
+			 for(int j=0;j<length;j++){
+				 for(int i=0;i<length;i++){
+					 
+					 if(j>i && table[j][i]=='*'){
+						 
+						 
+						 
+						 for(int k=0;k<l;k++){
+							 
+							 node state1 = adjlist[j].list;
+							 node state2 = adjlist[i].list;
+							 
+							 while(state1!=null && state1.input != alphabet[k]){
+								 state1 = state1.next;
+							 }
+							 while(state2!=null && state2.input != alphabet[k]){
+								 state2 = state2.next;
+							 }
+							 if(state1!=null && state2!=null &&   state1.input==state2.input){
+								 int row=indexForName(state1.destinationNode);
+								 int col=indexForName(state2.destinationNode);
+								 
+								 if(row < col){
+									 int tmp=row;
+									 row = col;
+									 col = tmp;
+								 }
+								 
+								 System.out.println("the value of row = "+row+" and the value of col = "+col);
+								 
+								 if(table[row][col]!='*' && table[row][col]!='Y'){
+									 table[j][i]='A';
+									 count--;
+								 }
+								 
+							 }
+							 
+							 
+						 }
+						 
+					 }
+					 
+				 }
+			 }
+			 
+			 
+			 for(int i=0;i<length;i++){
+				 for(int j=0;j<length;j++){
+					 System.out.print(table[i][j]+" ");
+				 }
+				 System.out.println();
+			 }
+			 
+			 System.out.println("should I continue");
+			 
+		 }
+		
+
+		 
+		
+		 
+		 for(int i=0;i<length;i++){
+			 for(int j=0;j<length;j++){
+				 System.out.print(table[i][j]);
+			 }
+			 System.out.println();
+		 }
+		 
+	 }
 }
